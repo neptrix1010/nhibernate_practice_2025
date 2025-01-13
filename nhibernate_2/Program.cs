@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using NHibernate;
 using nhibernate_2.Helpers;
 using nhibernate_2.Repositories;
@@ -24,6 +25,12 @@ builder.Services.AddScoped<NHibernate.ISession>(provider =>
 // Register repositories
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<CategoryRepository>();
+
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 var app = builder.Build();
 
